@@ -1,0 +1,25 @@
+{
+  "loan_approval": {
+    "description": "Loan application approval workflow",
+    "stages": [
+      {
+        "name": "credit_check",
+        "external_dependency": true,
+        "rules": [
+          {"field": "credit_score", "op": ">=", "value": 700, "fail_action": "reject", "explanation": "Credit score below threshold"},
+          {"field": "income", "op": ">", "value": 50000, "fail_action": "manual_review", "explanation": "Income too low for auto-approval"},
+          {"field": "age", "op": ">=", "value": 18, "fail_action": "reject", "explanation": "Applicant underage"}
+        ],
+        "default_action": "approve"
+      },
+      {
+        "name": "document_verification",
+        "external_dependency": false,
+        "rules": [
+          {"field": "documents_complete", "op": "==", "value": true, "fail_action": "manual_review", "explanation": "Missing documents"}
+        ],
+        "default_action": "approve"
+      }
+    ]
+  }
+}
